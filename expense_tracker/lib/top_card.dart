@@ -26,7 +26,10 @@ class TopCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Text("B A L A N C E",
-                style: TextStyle(color: Colors.grey[500], fontSize: 16)),
+                style: TextStyle(
+                    color: Colors.grey[500],
+                    fontSize: 20,
+                    fontWeight: FontWeight.w700)),
             Text(balance,
                 style: TextStyle(color: Colors.grey[800], fontSize: 40)),
             Row(
@@ -34,12 +37,12 @@ class TopCard extends StatelessWidget {
               children: [
                 Column(
                   children: [
-                    Icon(Icons.arrow_upward,
+                    const Icon(Icons.arrow_upward,
                         color: Colors.green, size: 36), // Adjust the size here
-                    Text('Income',
+                    const Text('Income',
                         style: TextStyle(color: Colors.green, fontSize: 16)),
                     Text(income,
-                        style: TextStyle(
+                        style: const TextStyle(
                             color: Colors.green,
                             fontWeight: FontWeight.w700,
                             fontSize: 18)),
@@ -47,12 +50,12 @@ class TopCard extends StatelessWidget {
                 ),
                 Column(
                   children: [
-                    Icon(Icons.arrow_downward,
+                    const Icon(Icons.arrow_downward,
                         color: Colors.red, size: 36), // Adjust the size here
-                    Text('Expense',
+                    const Text('Expense',
                         style: TextStyle(color: Colors.red, fontSize: 16)),
                     Text(expense,
-                        style: TextStyle(
+                        style: const TextStyle(
                             color: Colors.red,
                             fontWeight: FontWeight.w700,
                             fontSize: 18)),

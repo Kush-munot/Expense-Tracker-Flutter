@@ -1,11 +1,13 @@
+import 'package:expense_tracker/plus_button.dart';
 import 'package:expense_tracker/top_card.dart';
+import 'package:expense_tracker/transaction.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
   @override
-  _HomePageState createState() => _HomePageState();
+  createState() => _HomePageState();
 }
 
 /* class _HomePageState extends State<HomePage> {
@@ -47,19 +49,52 @@ class _HomePageState extends State<HomePage> {
       body: ListView(
         // Use ListView with shrinkWrap
         shrinkWrap: true,
-        children: [
+        children: const [
           TopCard(balance: "₹ 100", income: "₹ 300", expense: "₹ 400"),
-          Container(
-            height: 500,
-            color: Colors.blue[300],
-            child: Center(child: Text("Transactions")),
-          ),
-          Container(
-            height: 500,
+          Expanded(
             child: Center(
-              child: Text('Button'),
+              child: Column(
+                children: [
+                  Transaction(
+                    transactionName: "UPI Payment",
+                    money: "100",
+                    expenseOrIncome: "income",
+                    category: "UPI",
+                    message: "Elit velit tempor dolor deserunt et.",
+                  ),
+                  Transaction(
+                    transactionName: "UPI Payment",
+                    money: "100",
+                    expenseOrIncome: "expense",
+                    category: "Fruits and Vegetables",
+                    message: "Elit velit tempor dolor deserunt et.",
+                  ),
+                  Transaction(
+                    transactionName: "UPI Payment",
+                    money: "100",
+                    expenseOrIncome: "income",
+                    category: "UPI",
+                    message: "Elit velit tempor dolor deserunt et.",
+                  ),
+                  Transaction(
+                    transactionName: "UPI Payment",
+                    money: "100",
+                    expenseOrIncome: "expense",
+                    category: "UPI",
+                    message: "Elit velit tempor dolor deserunt et.",
+                  ),
+                  Transaction(
+                    transactionName: "UPI Payment",
+                    money: "100",
+                    expenseOrIncome: "expense",
+                    category: "UPI",
+                    message: "Elit velit tempor dolor deserunt et.",
+                  ),
+                ],
+              ),
             ),
           ),
+          PlusButton(),
         ],
       ),
     );
