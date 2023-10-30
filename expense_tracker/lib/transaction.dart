@@ -28,7 +28,7 @@ class Transaction extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
         child: Container(
           color: Colors.grey[200],
-          height: 56,
+          height: 80,
           width: double.infinity,
           child: Padding(
             padding: const EdgeInsets.all(15.0),
@@ -42,23 +42,6 @@ class Transaction extends StatelessWidget {
                       style: const TextStyle(
                           fontSize: 18, fontWeight: FontWeight.w700),
                     ),
-                    Container(
-                      width: 150,
-                      padding: const EdgeInsets.all(5),
-                      decoration: BoxDecoration(
-                        color: Colors.grey[400],
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Center(
-                        child: Text(
-                          category,
-                          style: const TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
-                      ),
-                    ),
                     Text(
                       (expenseOrIncome == 'Expense' ? '- ' : '+ ') +
                           '₹ ' +
@@ -66,6 +49,26 @@ class Transaction extends StatelessWidget {
                       style: textStyle,
                     ),
                   ],
+                ),
+                SizedBox(
+                  height: 3,
+                ),
+                Container(
+                  width: 150,
+                  padding: const EdgeInsets.all(5),
+                  decoration: BoxDecoration(
+                    color: Colors.grey[400],
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Center(
+                    child: Text(
+                      category,
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ),
                 ),
               ],
             ),

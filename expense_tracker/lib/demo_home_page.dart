@@ -146,7 +146,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> fetchData() async {
-    String expenseApi = dotenv.get("API_URL");
+    String expenseApi = dotenv.get("API_URL_KUSH");
 
     try {
       final response = await http.get(Uri.parse(expenseApi));
@@ -190,7 +190,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> postTransactionData(Map<String, dynamic> transactionData) async {
-    String expenseApi = dotenv.get("API_URL");
+    String expenseApi = dotenv.get("API_URL_KUSH");
     // print(json.encode(transactionData));
 
     try {
