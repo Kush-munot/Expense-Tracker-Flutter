@@ -4,6 +4,7 @@ import 'package:expense_tracker/plus_button.dart';
 import 'package:expense_tracker/top_card.dart';
 import 'package:expense_tracker/transaction.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -20,90 +21,110 @@ class _HomePageState extends State<HomePage> {
   String expense = "₹ 0";
 
   void _newTransaction() {
-    String expenseOrIncome = 'Select';
+    String expenseOrIncome = 'Expense';
+    String modeOfPayment = 'Cash';
     String title = '';
     String amount = '';
     String message = '';
-    String category = 'Category';
+    String category = 'Milk';
 
     showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
           title: const Text("New Transaction"),
-          content: Form(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                DropdownButton<String>(
-                  value: expenseOrIncome,
-                  items: <String>['Expense', 'Income'].map((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                  onChanged: (String? newValue) {
-                    setState(() {
-                      expenseOrIncome = newValue!;
-                    });
-                  },
-                ),
-                TextFormField(
-                  decoration: const InputDecoration(labelText: 'Amount'),
-                  onChanged: (value) {
-                    amount = value;
-                  },
-                ),
-                TextFormField(
-                  decoration: const InputDecoration(labelText: 'Message'),
-                  onChanged: (value) {
-                    message = value;
-                  },
-                ),
-                DropdownButton<String>(
-                  value: category,
-                  items: <String>[
-                    'Milk',
-                    'Grocery',
-                    'Vegetable & Fruits',
-                    'Petrol',
-                    'Iron Clothes',
-                    'Bills',
-                    'Card Payment',
-                    'UPI Payment',
-                    'Snacks',
-                    'GM Bus Fare',
-                    'Extras',
-                  ].map((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                  onChanged: (String? newValue) {
-                    setState(() {
-                      category = newValue!;
-                    });
-                  },
-                ),
-              ],
+          content: SingleChildScrollView(
+            child: Form(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  DropdownButton<String>(
+                    value: expenseOrIncome,
+                    items: <String>['Expense', 'Income'].map((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        expenseOrIncome = newValue!;
+                      });
+                    },
+                  ),
+                  DropdownButton<String>(
+                    value: modeOfPayment,
+                    items: <String>['Cash', 'UPI', 'Credit Card']
+                        .map((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        modeOfPayment = newValue!;
+                      });
+                    },
+                  ),
+                  TextFormField(
+                    decoration: const InputDecoration(labelText: 'Amount'),
+                    onChanged: (value) {
+                      amount = value;
+                    },
+                  ),
+                  TextFormField(
+                    decoration: const InputDecoration(labelText: 'Message'),
+                    onChanged: (value) {
+                      message = value;
+                    },
+                  ),
+                  DropdownButton<String>(
+                    value: category,
+                    items: <String>[
+                      'Milk',
+                      'Grocery',
+                      'Vegetable & Fruits',
+                      'Petrol',
+                      'Iron Clothes',
+                      'Bills',
+                      'Snacks',
+                      'GM Bus Fare',
+                      'Monthly Budget',
+                      'Extras',
+                    ].map((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        category = newValue!;
+                      });
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
           actions: <Widget>[
             ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
                 final transactionData = {
                   "Amount": double.parse(amount),
                   "Expense/Income": expenseOrIncome,
                   // "Date": DateTime.now().toUtc().toIso8601String(),
                   "Date": _getFormattedDate(DateTime.now()),
+                  "ModeOfPayment": modeOfPayment,
                   "Category": category,
                   "Message": message,
                 };
-                postTransactionData(transactionData);
+                await postTransactionData(transactionData);
 
                 Navigator.of(context).pop();
+
+                await fetchData();
               },
               child: const Text('Save'),
             ),
@@ -125,12 +146,10 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> fetchData() async {
-    // Replace with your API URL
-    const apiUrl =
-        'https://script.google.com/macros/s/AKfycbxs4S1kZcXrjG4G5Xv5CrGfPBSNR-VFfwWOmtCTN1Lp_D1gtC9DVMPGbsQKN1ocHjGW/exec';
+    String expenseApi = dotenv.get("API_URL");
 
     try {
-      final response = await http.get(Uri.parse(apiUrl));
+      final response = await http.get(Uri.parse(expenseApi));
       if (response.statusCode == 200) {
         final List<dynamic> data = json.decode(response.body);
         final List<Transaction> fetchedTransactions = data.map((item) {
@@ -171,16 +190,13 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> postTransactionData(Map<String, dynamic> transactionData) async {
-    print(json.encode(transactionData));
-    // You'll need to replace the URL and handle the response accordingly
-    const postApiUrl =
-        'https://script.google.com/macros/s/AKfycbxs4S1kZcXrjG4G5Xv5CrGfPBSNR-VFfwWOmtCTN1Lp_D1gtC9DVMPGbsQKN1ocHjGW/exec';
+    String expenseApi = dotenv.get("API_URL");
+    // print(json.encode(transactionData));
 
     try {
-      final response = await http.post(
-        Uri.parse(postApiUrl),
-        body: json.encode(transactionData),
-      );
+      final response = await http.post(Uri.parse(expenseApi),
+          body: json.encode(transactionData),
+          headers: {"Accept": "application/json"});
 
       if (response.statusCode == 200) {
         print('Data posted successfully');
