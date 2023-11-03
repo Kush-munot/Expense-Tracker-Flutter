@@ -5,6 +5,7 @@ import 'package:expense_tracker/top_card.dart';
 import 'package:expense_tracker/transaction.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:expense_tracker/transaction_dialog.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -21,129 +22,20 @@ class _HomePageState extends State<HomePage> {
   String expense = "₹ 0";
 
   void _newTransaction() {
-    String expenseOrIncome = 'Expense';
-    String modeOfPayment = 'Cash';
-    String title = '';
-    String amount = '';
-    String message = '';
-    String category = 'Milk';
-
     showDialog(
       context: context,
       builder: (context) {
-        return AlertDialog(
-          title: const Text("New Transaction"),
-          content: SingleChildScrollView(
-            child: Form(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  DropdownButton<String>(
-                    value: expenseOrIncome,
-                    items: <String>['Expense', 'Income'].map((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        expenseOrIncome = newValue!;
-                      });
-                    },
-                  ),
-                  DropdownButton<String>(
-                    value: modeOfPayment,
-                    items: <String>['Cash', 'UPI', 'Credit Card']
-                        .map((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        modeOfPayment = newValue!;
-                      });
-                    },
-                  ),
-                  TextFormField(
-                    decoration: const InputDecoration(labelText: 'Amount'),
-                    onChanged: (value) {
-                      amount = value;
-                    },
-                  ),
-                  TextFormField(
-                    decoration: const InputDecoration(labelText: 'Message'),
-                    onChanged: (value) {
-                      message = value;
-                    },
-                  ),
-                  DropdownButton<String>(
-                    value: category,
-                    items: <String>[
-                      'Milk',
-                      'Grocery',
-                      'Vegetable & Fruits',
-                      'Petrol',
-                      'Iron Clothes',
-                      'Bills',
-                      'Snacks',
-                      'GM Bus Fare',
-                      'Monthly Budget',
-                      'Extras',
-                    ].map((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        category = newValue!;
-                      });
-                    },
-                  ),
-                ],
-              ),
-            ),
-          ),
-          actions: <Widget>[
-            ElevatedButton(
-              onPressed: () async {
-                final transactionData = {
-                  "Amount": double.parse(amount),
-                  "Expense/Income": expenseOrIncome,
-                  // "Date": DateTime.now().toUtc().toIso8601String(),
-                  "Date": _getFormattedDate(DateTime.now()),
-                  "ModeOfPayment": modeOfPayment,
-                  "Category": category,
-                  "Message": message,
-                };
-                await postTransactionData(transactionData);
-
-                Navigator.of(context).pop();
-
-                await fetchData();
-              },
-              child: const Text('Save'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text('Cancel'),
-            ),
-          ],
+        return TransactionDialog(
+          onSave: (transactionData) async {
+            await postTransactionData(transactionData);
+            Navigator.of(context).pop();
+            await fetchData();
+          },
         );
       },
     );
   }
 
-  String _getFormattedDate(DateTime dateTime) {
-    // Format the date as "MM/dd/yyyy"
-    return "${dateTime.month}/${dateTime.day}/${dateTime.year}";
-  }
 
   Future<void> fetchData() async {
     String expenseApi = dotenv.get("API_URL_KUSH");
