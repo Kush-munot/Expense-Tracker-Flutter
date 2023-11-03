@@ -12,14 +12,14 @@ class PlusButton extends StatelessWidget {
     return GestureDetector(
       onTap: function,
       child: Container(
-        height: 75,
-        width: 75,
+        height: 65,
+        width: 65,
         decoration:
             BoxDecoration(color: Colors.grey[400], shape: BoxShape.circle),
         child: const Center(
           child: Text(
             '+',
-            style: TextStyle(color: Colors.white, fontSize: 25),
+            style: TextStyle(color: Colors.white, fontSize: 30),
           ),
         ),
       ),

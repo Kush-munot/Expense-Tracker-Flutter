@@ -214,6 +214,7 @@ class _HomePageState extends State<HomePage> {
             expenseOrIncome: item['Expense/Income'],
             category: item['Category'],
             message: item['Message'],
+            modeOfPayment: item['ModeOfPayment'],
           );
         }).toList();
 
@@ -291,6 +292,8 @@ class _HomePageState extends State<HomePage> {
                       transactions[transactionIndex - 1].expenseOrIncome,
                   category: transactions[transactionIndex - 1].category,
                   message: transactions[transactionIndex - 1].message,
+                  modeOfPayment:
+                      transactions[transactionIndex - 1].modeOfPayment,
                 );
               },
               childCount: transactions.length,
