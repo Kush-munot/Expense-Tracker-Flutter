@@ -16,14 +16,14 @@ class TopCard extends StatelessWidget {
     return Container(
       color: Colors.grey[300],
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(8.0, 35.0, 8.0, 8.0),
+        padding: const EdgeInsets.fromLTRB(8.0, 45.0, 8.0, 8.0),
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(
                 20), // Adjust the radius to control corner roundness
             color: Colors.grey[200],
           ),
-          height: 200,
+          height: 210,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
