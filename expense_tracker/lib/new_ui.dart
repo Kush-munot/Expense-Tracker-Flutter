@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:expense_tracker/transaction_dialog.dart';
 
-
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -38,7 +37,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> fetchData() async {
-    String expenseApi = dotenv.get("API_URL_RAKHEE");
+    String expenseApi = dotenv.get("API_URL_KUSH");
 
     try {
       final response = await http.get(Uri.parse(expenseApi));
@@ -82,7 +81,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> postTransactionData(Map<String, dynamic> transactionData) async {
-    String expenseApi = dotenv.get("API_URL_RAKHEE");
+    String expenseApi = dotenv.get("API_URL_KUSH");
 
     try {
       final response = await http.post(Uri.parse(expenseApi),

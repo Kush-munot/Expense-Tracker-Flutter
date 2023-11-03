@@ -16,7 +16,7 @@ class TopCard extends StatelessWidget {
     return Container(
       color: Colors.grey[300],
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.fromLTRB(8.0, 35.0, 8.0, 8.0),
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(
