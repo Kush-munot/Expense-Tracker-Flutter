@@ -26,7 +26,73 @@ class _TransactionDialogState extends State<TransactionDialog> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              // ... Your dropdowns and text fields here
+              DropdownButton<String>(
+                value: expenseOrIncome,
+                items: <String>['Expense', 'Income'].map((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+                onChanged: (String? newValue) {
+                  setState(() {
+                    expenseOrIncome = newValue!;
+                  });
+                },
+              ),
+              DropdownButton<String>(
+                value: modeOfPayment,
+                items:
+                    <String>['Cash', 'UPI', 'Credit Card'].map((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+                onChanged: (String? newValue) {
+                  setState(() {
+                    modeOfPayment = newValue!;
+                  });
+                },
+              ),
+              TextFormField(
+                decoration: const InputDecoration(labelText: 'Amount'),
+                onChanged: (value) {
+                  amount = value;
+                },
+                keyboardType: TextInputType.number,
+              ),
+              TextFormField(
+                decoration: const InputDecoration(labelText: 'Message'),
+                onChanged: (value) {
+                  message = value;
+                },
+              ),
+              DropdownButton<String>(
+                value: category,
+                items: <String>[
+                  'Milk',
+                  'Grocery',
+                  'Vegetable & Fruits',
+                  'Petrol',
+                  'Iron Clothes',
+                  'Bills',
+                  'Snacks',
+                  'GM Bus Fare',
+                  'Monthly Budget',
+                  'Extras',
+                ].map((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+                onChanged: (String? newValue) {
+                  setState(() {
+                    category = newValue!;
+                  });
+                },
+              ),
             ],
           ),
         ),
