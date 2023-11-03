@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:expense_tracker/transaction_dialog.dart';
 
+
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -37,7 +38,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> fetchData() async {
-    String expenseApi = dotenv.get("API_URL_KUSH");
+    String expenseApi = dotenv.get("API_URL_RAKHEE");
 
     try {
       final response = await http.get(Uri.parse(expenseApi));
@@ -81,8 +82,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> postTransactionData(Map<String, dynamic> transactionData) async {
-    String expenseApi = dotenv.get("API_URL_KUSH");
-    // print(json.encode(transactionData));
+    String expenseApi = dotenv.get("API_URL_RAKHEE");
 
     try {
       final response = await http.post(Uri.parse(expenseApi),
@@ -111,20 +111,14 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Colors.grey[300],
       body: CustomScrollView(
         slivers: [
-          SliverAppBar(
+          SliverPersistentHeader(
+            delegate: TopCardDelegate(balance, income, expense),
+            floating: false,
             pinned: true,
-            expandedHeight: 160, // Adjust this as needed
-            flexibleSpace: FlexibleSpaceBar(
-              background:
-                  TopCard(balance: balance, income: income, expense: expense),
-            ),
           ),
           SliverList(
             delegate:
                 SliverChildBuilderDelegate((BuildContext context, int index) {
-              if (index == -1) {
-                return Container(); // This is a placeholder to ensure the first item is not sticky
-              }
               final transactionIndex = transactions.length - index;
               return Transaction(
                 transactionName:
@@ -141,5 +135,30 @@ class _HomePageState extends State<HomePage> {
       ),
       floatingActionButton: PlusButton(function: _newTransaction),
     );
+  }
+}
+
+class TopCardDelegate extends SliverPersistentHeaderDelegate {
+  final String balance;
+  final String income;
+  final String expense;
+
+  TopCardDelegate(this.balance, this.income, this.expense);
+
+  @override
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    return TopCard(balance: balance, income: income, expense: expense);
+  }
+
+  @override
+  double get maxExtent => 200.0;
+
+  @override
+  double get minExtent => 200.0;
+
+  @override
+  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
+    return false;
   }
 }
