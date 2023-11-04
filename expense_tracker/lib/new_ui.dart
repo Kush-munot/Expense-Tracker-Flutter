@@ -1,3 +1,4 @@
+/* import 'package:expense_tracker/theme/theme_manager.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -18,7 +19,7 @@ class _HomePageState extends State<HomePage> {
   List<Transaction> transactions = [];
   String balance = "₹ 0";
   String income = "₹ 0";
-  String expense = "₹ 0";
+  String expense = "₹ 0"; 
 
   void _newTransaction() {
     showDialog(
@@ -36,7 +37,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> fetchData() async {
-    String expenseApi = dotenv.get("API_URL_RAKHEE");
+    String expenseApi = dotenv.get("API_URL_KUSH");
 
     try {
       final response = await http.get(Uri.parse(expenseApi));
@@ -79,7 +80,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> postTransactionData(Map<String, dynamic> transactionData) async {
-    String expenseApi = dotenv.get("API_URL_RAKHEE");
+    String expenseApi = dotenv.get("API_URL_KUSH");
 
     try {
       final response = await http.post(Uri.parse(expenseApi),
@@ -107,7 +108,18 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[300],
+      backgroundColor: Theme.of(context).primaryColor,
+      appBar: AppBar(
+        title: Text("Money Mate"),
+        actions: [
+          Switch(
+            value: _themeManager.themeMode == ThemeMode.dark,
+            onChanged: (newValue) {
+              _themeManager.toggleTheme(newValue);
+            },
+          )
+        ],
+      ),
       body: CustomScrollView(
         slivers: [
           SliverPersistentHeader(
@@ -168,3 +180,4 @@ class TopCardDelegate extends SliverPersistentHeaderDelegate {
     return true;
   }
 }
+ */

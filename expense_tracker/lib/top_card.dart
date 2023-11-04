@@ -14,7 +14,7 @@ class TopCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.fromLTRB(8, 40.0, 8, 0),
+      padding: EdgeInsets.fromLTRB(8, 15.0, 8, 0),
       color: Colors.grey[300],
       child: Container(
         height: 300,
