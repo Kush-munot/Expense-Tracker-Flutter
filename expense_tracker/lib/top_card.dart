@@ -15,7 +15,9 @@ class TopCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.fromLTRB(8, 15.0, 8, 0),
-      color: Colors.grey[300],
+      color: Theme.of(context).brightness == Brightness.light
+          ? Colors.grey[300]
+          : Colors.teal[300],
       child: Container(
         height: 300,
         decoration: BoxDecoration(

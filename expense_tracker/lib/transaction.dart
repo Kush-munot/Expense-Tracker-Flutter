@@ -22,14 +22,23 @@ class Transaction extends StatelessWidget {
     TextStyle textStyle = TextStyle(
       fontSize: 18,
       fontWeight: FontWeight.w700,
-      color: expenseOrIncome == 'Expense' ? Colors.red : Colors.green,
+      color: expenseOrIncome == 'Expense'
+          ? Theme.of(context).brightness == Brightness.light
+              ? Colors.red
+              : Colors.white
+          : Theme.of(context).brightness == Brightness.light
+              ? Colors.green
+              : Colors.white,
     );
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(20),
         child: Container(
-          color: Colors.grey[200],
+          // color: Colors.grey[200],
+          color: Theme.of(context).brightness == Brightness.light
+              ? Colors.grey[200]
+              : Colors.black45,
           child: Row(
             children: [
               Expanded(
@@ -74,7 +83,10 @@ class Transaction extends StatelessWidget {
                               child: Container(
                                 padding: const EdgeInsets.all(5),
                                 decoration: BoxDecoration(
-                                  color: Colors.grey[400],
+                                  color: Theme.of(context).brightness ==
+                                          Brightness.light
+                                      ? Colors.grey[400]
+                                      : Colors.teal[400],
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 child: Text(
@@ -90,7 +102,10 @@ class Transaction extends StatelessWidget {
                               child: Container(
                                 padding: const EdgeInsets.all(5),
                                 decoration: BoxDecoration(
-                                  color: Colors.grey[400],
+                                  color: Theme.of(context).brightness ==
+                                          Brightness.light
+                                      ? Colors.grey[400]
+                                      : Colors.teal[400],
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 child: Text(

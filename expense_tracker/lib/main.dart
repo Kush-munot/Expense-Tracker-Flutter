@@ -155,7 +155,9 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[300],
+      backgroundColor: Theme.of(context).brightness == Brightness.light
+          ? Colors.grey[300]
+          : Colors.teal[300],
       appBar: AppBar(
         title: Text("Money Mate"),
         actions: [

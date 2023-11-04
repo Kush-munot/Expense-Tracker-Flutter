@@ -14,8 +14,11 @@ class PlusButton extends StatelessWidget {
       child: Container(
         height: 65,
         width: 65,
-        decoration:
-            BoxDecoration(color: Colors.grey[400], shape: BoxShape.circle),
+        decoration: BoxDecoration(
+            color: Theme.of(context).brightness == Brightness.light
+                ? Colors.grey[400]
+                : Colors.grey[800],
+            shape: BoxShape.circle),
         child: const Center(
           child: Text(
             '+',
