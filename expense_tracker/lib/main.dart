@@ -68,6 +68,10 @@ class _HomePageState extends State<HomePage> {
   String income = "₹ 0";
   String expense = "₹ 0";
 
+  String cc_exp = "₹ 0";
+  String upi_exp = "₹ 0";
+  String cash_exp = "₹ 0";
+
   void _newTransaction() {
     showDialog(
       context: context,
@@ -103,12 +107,25 @@ class _HomePageState extends State<HomePage> {
 
         double totalIncome = 0;
         double totalExpense = 0;
+        double totalCreditCardExpense = 0;
+        double totalUpiExpense = 0;
+        double totalCashExpense = 0;
 
         for (var transaction in fetchedTransactions) {
           if (transaction.expenseOrIncome == 'Income') {
             totalIncome += double.parse(transaction.money);
           } else if (transaction.expenseOrIncome == 'Expense') {
             totalExpense += double.parse(transaction.money);
+          }
+
+          if (transaction.modeOfPayment == 'Credit Card') {
+            totalCreditCardExpense += double.parse(transaction.money);
+          }
+          if (transaction.modeOfPayment == 'UPI') {
+            totalUpiExpense += double.parse(transaction.money);
+          }
+          if (transaction.modeOfPayment == 'Cash') {
+            totalCashExpense += double.parse(transaction.money);
           }
         }
 
@@ -117,7 +134,12 @@ class _HomePageState extends State<HomePage> {
           income = '₹ $totalIncome';
           expense = '₹ $totalExpense';
           balance = '₹ ${totalIncome - totalExpense}';
+          cc_exp = '₹ $totalCreditCardExpense';
+          upi_exp = '₹ $totalUpiExpense';
+          cash_exp = '₹ $totalCashExpense';
         });
+        print(cc_exp);
+        print(expense);
       } else {
         print('Failed to fetch data. Status Code: ${response.statusCode}');
       }
@@ -172,7 +194,8 @@ class _HomePageState extends State<HomePage> {
       body: CustomScrollView(
         slivers: [
           SliverPersistentHeader(
-            delegate: TopCardDelegate(balance, income, expense),
+            delegate: TopCardDelegate(
+                balance, income, expense, cc_exp, upi_exp, cash_exp),
             floating: false,
             pinned: true,
           ),
@@ -207,7 +230,12 @@ class TopCardDelegate extends SliverPersistentHeaderDelegate {
   final String income;
   final String expense;
 
-  TopCardDelegate(this.balance, this.income, this.expense);
+  final String creditCardExp;
+  final String upiExp;
+  final String cashExp;
+
+  TopCardDelegate(this.balance, this.income, this.expense, this.creditCardExp,
+      this.upiExp, this.cashExp);
 
   @override
   Widget build(
@@ -215,14 +243,21 @@ class TopCardDelegate extends SliverPersistentHeaderDelegate {
     double shrinkOffset,
     bool overlapsContent,
   ) {
-    return TopCard(balance: balance, income: income, expense: expense);
+    return TopCard(
+      balance: balance,
+      income: income,
+      expense: expense,
+      cc_exp: creditCardExp,
+      upi_exp: upiExp,
+      cash_exp: cashExp,
+    );
   }
 
   @override
-  double get maxExtent => 200.0;
+  double get maxExtent => 250.0;
 
   @override
-  double get minExtent => 200.0;
+  double get minExtent => 250.0;
 
   @override
   bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {

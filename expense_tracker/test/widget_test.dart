@@ -1,30 +1,25 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/mockito.dart';
+import 'package:expense_tracker/transaction_dialog.dart'; // Import the relevant dependencies
 
-import 'package:expense_tracker/main.dart';
+class MockNavigatorObserver extends Mock implements NavigatorObserver {}
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  testWidgets('Test _newTransaction', (WidgetTester tester) async {
+    final navigatorObserver = MockNavigatorObserver();
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    await tester.pumpWidget(MaterialApp(
+      home: HomePage(),
+      navigatorObservers: [navigatorObserver],
+    ));
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+    // Tap the floating action button to trigger the _newTransaction method
+    await tester.tap(find.byType(FloatingActionButton));
+    await tester.pumpAndSettle();
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    // Verify that the TransactionDialog was shown
+    verify(navigatorObserver.didPush(
+        any, any)); // Replace 'any' with the TransactionDialog type if possible
   });
 }

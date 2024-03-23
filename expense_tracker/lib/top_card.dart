@@ -1,14 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class TopCard extends StatelessWidget {
   final String balance;
   final String income;
   final String expense;
+  final String cc_exp;
+  final String upi_exp;
+  final String cash_exp;
+
   const TopCard(
       {Key? key,
       required this.balance,
       required this.expense,
-      required this.income})
+      required this.income,
+      required this.cash_exp,
+      required this.cc_exp,
+      required this.upi_exp})
       : super(key: key);
 
   @override
@@ -19,7 +27,7 @@ class TopCard extends StatelessWidget {
           ? Colors.grey[300]
           : Colors.teal[300],
       child: Container(
-        height: 300,
+        height: 400,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
           color: Colors.grey[200],
@@ -59,6 +67,44 @@ class TopCard extends StatelessWidget {
                     Text(expense,
                         style: const TextStyle(
                             color: Colors.red,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 18)),
+                  ],
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Column(
+                  children: [
+                    const Text('Credit Card',
+                        style: TextStyle(color: Colors.black, fontSize: 16)),
+                    Text(cc_exp,
+                        style: const TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 18)),
+                  ],
+                ),
+                Column(
+                  children: [
+                    const Text('UPI',
+                        style: TextStyle(color: Colors.black, fontSize: 16)),
+                    Text(upi_exp,
+                        style: const TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 18)),
+                  ],
+                ),
+                Column(
+                  children: [
+                    const Text('Cash',
+                        style: TextStyle(color: Colors.black, fontSize: 16)),
+                    Text(cash_exp,
+                        style: const TextStyle(
+                            color: Colors.black,
                             fontWeight: FontWeight.w700,
                             fontSize: 18)),
                   ],
