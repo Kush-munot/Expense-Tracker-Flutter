@@ -15,7 +15,7 @@ class _TransactionDialogState extends State<TransactionDialog> {
   String modeOfPayment = 'Cash';
   String amount = '';
   String message = '';
-  String category = 'Milk';
+  String category = 'Extras';
 
   @override
   Widget build(BuildContext context) {
@@ -71,15 +71,12 @@ class _TransactionDialogState extends State<TransactionDialog> {
               DropdownButton<String>(
                 value: category,
                 items: <String>[
-                  'Milk',
+                  'Food',
                   'Grocery',
                   'Vegetable & Fruits',
                   'Petrol',
-                  'Iron Clothes',
                   'Bills',
-                  'Snacks',
-                  'GM Bus Fare',
-                  'Monthly Budget',
+                  'Shopping',
                   'Extras',
                 ].map((String value) {
                   return DropdownMenuItem<String>(

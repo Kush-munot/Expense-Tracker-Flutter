@@ -131,15 +131,13 @@ class _HomePageState extends State<HomePage> {
 
         setState(() {
           transactions = fetchedTransactions;
-          income = '₹ $totalIncome';
-          expense = '₹ $totalExpense';
-          balance = '₹ ${totalIncome - totalExpense}';
-          cc_exp = '₹ $totalCreditCardExpense';
-          upi_exp = '₹ $totalUpiExpense';
-          cash_exp = '₹ $totalCashExpense';
+          income = '₹ ${totalIncome.toStringAsFixed(3)}';
+          expense = '₹ ${totalExpense.toStringAsFixed(3)}';
+          balance = '₹ ${(totalIncome - totalExpense).toStringAsFixed(3)}';
+          cc_exp = '₹ ${totalCreditCardExpense.toStringAsFixed(3)}';
+          upi_exp = '₹ ${totalUpiExpense.toStringAsFixed(3)}';
+          cash_exp = '₹ ${totalCashExpense.toStringAsFixed(3)}';
         });
-        print(cc_exp);
-        print(expense);
       } else {
         print('Failed to fetch data. Status Code: ${response.statusCode}');
       }
@@ -254,10 +252,10 @@ class TopCardDelegate extends SliverPersistentHeaderDelegate {
   }
 
   @override
-  double get maxExtent => 250.0;
+  double get maxExtent => 300.0;
 
   @override
-  double get minExtent => 250.0;
+  double get minExtent => 300.0;
 
   @override
   bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
